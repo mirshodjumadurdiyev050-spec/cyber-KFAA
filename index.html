@@ -6,34 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Cryptographic Laboratory V2.0</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.39.0/build/stlite.css" />
+    <style>
+      #error-msg { color: red; font-family: sans-serif; padding: 20px; display: none; }
+    </style>
   </head>
   <body>
+    <div id="error-msg">
+      <h3>Xatolik yuz berdi!</h3>
+      <p>Dastur fayllari topilmadi. Iltimos, GitHub-da <b>main.py</b> fayli borligini va u <b>index.html</b> bilan bitta joyda turganini tekshiring.</p>
+    </div>
     <div id="root"></div>
     <script src="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.39.0/build/stlite.js"></script>
     <script>
       stlite.mount({
-        requirements: ["pandas", "fpdf2", "pycryptodome"], // Install requirements in browser
+        requirements: ["pandas", "fpdf2", "pycryptodome"],
         entrypoint: "main.py",
         files: {
-          "main.py": {
-            url: "main.py"
-          },
-          "logic/classical.py": {
-            url: "logic/classical.py"
-          },
-          "logic/rsa.py": {
-            url: "logic/rsa.py"
-          },
-          "logic/hashing.py": {
-            url: "logic/hashing.py"
-          },
-          "logic/pdf_gen.py": {
-            url: "logic/pdf_gen.py"
-          },
-          "assets/styles.css": {
-            url: "assets/styles.css"
-          }
+          "main.py": { url: "main.py" },
+          "logic/classical.py": { url: "logic/classical.py" },
+          "logic/rsa.py": { url: "logic/rsa.py" },
+          "logic/hashing.py": { url: "logic/hashing.py" },
+          "logic/pdf_gen.py": { url: "logic/pdf_gen.py" },
+          "assets/styles.css": { url: "assets/styles.css" }
         },
+        onError: (err) => {
+          console.error(err);
+          if(err.message.includes("404")) {
+            document.getElementById("error-msg").style.display = "block";
+          }
+        }
       }, document.getElementById("root"));
     </script>
   </body>
